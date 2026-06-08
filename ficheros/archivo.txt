@@ -1,0 +1,3 @@
+Hola mundo
+Estoy estudiando Python
+Este es el metodo append
