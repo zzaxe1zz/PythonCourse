@@ -1,5 +1,27 @@
 from tkinter import *
 
+i = 0
+
+
+def click(valor):
+    global i
+    entrada.insert(i, valor)
+    i += 1
+
+
+def Borrar():
+    entrada.delete(0, END)
+    i = 0
+
+
+def Operaciones():
+    operacion = entrada.get()
+    resultado = eval(operacion)
+    entrada.delete(0, END)
+    entrada.insert(0, resultado)
+    i = 0
+
+
 # ventana
 root = Tk()
 root.title('Calculadora')
@@ -11,27 +33,36 @@ entrada = Entry(root, font=("Currier 20"))
 entrada.grid(row=0, column=0, columnspan=4, padx=5, pady=5)
 
 # Botones
-boton1 = Button(root, text="1", width=5, height=2)
-boton2 = Button(root, text="2", width=5, height=2)
-boton3 = Button(root, text="3", width=5, height=2)
-boton4 = Button(root, text="4", width=5, height=2)
-boton5 = Button(root, text="5", width=5, height=2)
-boton6 = Button(root, text="6", width=5, height=2)
-boton7 = Button(root, text="7", width=5, height=2)
-boton8 = Button(root, text="8", width=5, height=2)
-boton9 = Button(root, text="9", width=5, height=2)
-boton0 = Button(root, text="0", width=13, height=2)
+boton1 = Button(root, text="1", width=5, height=2, command=lambda: click(1))
+boton2 = Button(root, text="2", width=5, height=2, command=lambda: click(2))
+boton3 = Button(root, text="3", width=5, height=2, command=lambda: click(3))
+boton4 = Button(root, text="4", width=5, height=2, command=lambda: click(4))
+boton5 = Button(root, text="5", width=5, height=2, command=lambda: click(5))
+boton6 = Button(root, text="6", width=5, height=2, command=lambda: click(6))
+boton7 = Button(root, text="7", width=5, height=2, command=lambda: click(7))
+boton8 = Button(root, text="8", width=5, height=2, command=lambda: click(8))
+boton9 = Button(root, text="9", width=5, height=2, command=lambda: click(9))
+boton0 = Button(root, text="0", width=13, height=2, command=lambda: click(0))
 
-botonBorrar = Button(root, text="DEl", width=5, height=2)
-botonParentesis1 = Button(root, text="(", width=5, height=2)
-botonParentesis2 = Button(root, text=")", width=5, height=2)
-botonPunto = Button(root, text=".", width=5, height=2)
+botonBorrar = Button(root, text="DEL", width=5,
+                     height=2, command=lambda: Borrar())
+botonParentesis1 = Button(
+    root, text="(", width=5, height=2, command=lambda: click("("))
+botonParentesis2 = Button(root, text=")", width=5,
+                          height=2, command=lambda: click(")"))
+botonPunto = Button(root, text=".", width=5, height=2,
+                    command=lambda: click("."))
 
-botonSum = Button(root, text="+", width=5, height=2)
-botonRes = Button(root, text="-", width=5, height=2)
-botonMul = Button(root, text="x", width=5, height=2)
-botonDiv = Button(root, text="/", width=5, height=2)
-botonIgu = Button(root, text="=", width=5, height=2)
+botonSum = Button(root, text="+", width=5, height=2,
+                  command=lambda: click("+"))
+botonRes = Button(root, text="-", width=5, height=2,
+                  command=lambda: click("-"))
+botonMul = Button(root, text="x", width=5, height=2,
+                  command=lambda: click("*"))
+botonDiv = Button(root, text="/", width=5, height=2,
+                  command=lambda: click("/"))
+botonIgu = Button(root, text="=", width=5, height=2,
+                  command=lambda: Operaciones())
 
 
 # Acomodo
