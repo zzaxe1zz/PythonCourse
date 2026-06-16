@@ -13,11 +13,12 @@ from django.shortcuts import render
 
 def Saludo(request):
     return render(request, 'index.html', {
-        'mensaje': 'Ingreso',
-        'titulo': 'Personas',
-        'personas': [
-            {'titulo': 'Axel', 'edad': 21, 'adulto': True},
-            {'titulo': 'Diana', 'edad': 21, 'adulto': True},
-            {'titulo': 'Esmeralda', 'edad': 17, 'adulto': False}
+        'titulo': 'Inicio',
+        'mensaje': 'Tienda',
+        'articulos': [
+            {'titulo': 'Sudadera', 'precio': 15, 'stock': False},
+            {'titulo': 'Pantalon', 'precio': 11, 'stock': True},
+            {'titulo': 'Playera', 'precio': 18, 'stock': False},
+            {'titulo': 'Gorra', 'precio': 10, 'stock': True}
         ]
     })
