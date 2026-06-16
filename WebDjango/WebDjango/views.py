@@ -4,6 +4,8 @@ from django.contrib.auth import login as lg
 from django.contrib.auth import authenticate
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.contrib.auth import logout
+
 
 # def Saludo(request):
 #     return HttpResponse('Hola mundo desde Django')
@@ -44,3 +46,9 @@ def Login(request):
             print()
 
     return render(request, 'user/login.html', {})
+
+
+def Logout(request):
+    logout(request)
+    messages.success(request, 'Sesion cerrada')
+    return redirect(Login)
