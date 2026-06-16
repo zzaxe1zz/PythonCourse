@@ -29,10 +29,23 @@
                     </span>
                 </li>
                 {%endfor%}
-            </ul>
 
-            <img src="{% static 'Images/gorra.jpg' %}" width="100">
+                <img src="{% static 'Images/gorra.jpg' %}" width="100">
+            </ul>
     </div>
+    {% if messages %}
+    {% for m in messages %}
+    {% if m.tags == 'success'%}
+    <div class="alert alert-success">
+        {{m}}
+    </div>
+    {% else %}
+    <div class="alert alert-danger">
+        {{m}}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
 
 
 </body>
