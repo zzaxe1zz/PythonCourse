@@ -5,7 +5,11 @@ from django.contrib.auth import authenticate
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth import logout
+from .forms import Registro
+from django.contrib.auth.models import User
 
+
+# python manage.py runserver
 
 # def Saludo(request):
 #     return HttpResponse('Hola mundo desde Django')
@@ -52,3 +56,21 @@ def Logout(request):
     logout(request)
     messages.success(request, 'Sesion cerrada')
     return redirect(Login)
+
+
+def Registration(request):
+    form = Registro(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        username = form.cleaned_data.get('username')
+        email = form.cleaned_data.get('email')
+        password = form.cleaned_data.get('password')
+
+        usuario = User.objects.create_user(username, email, password)
+        if usuario:
+            lg(request, usuario)
+            messages.success(request, f'Bienvenido {username}')
+            return redirect('Index')
+
+    return render(request, 'user/registro.html', {
+        'form': form
+    })

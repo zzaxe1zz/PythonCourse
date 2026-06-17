@@ -22,6 +22,7 @@ from . import views
 urlpatterns = [
     path('user/logout', views.Logout, name='logout'),
     path('user/login', views.Login, name='login'),
+    path('user/registration', views.Registration, name='registration'),
     path('', views.Index, name='Index'),
     path('admin/', admin.site.urls),
 
