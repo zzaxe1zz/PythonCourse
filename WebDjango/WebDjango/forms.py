@@ -16,7 +16,26 @@ class Registro(forms.Form):
         'placeholder': 'Contraseña'
     }))
 
+    passwordConfirmation = forms.CharField(label='Confirmar contraseña', required=True, widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Contraseña'
+    }))
+
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError('Este nombre de usuario ya existe')
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('Correo ya registrado')
+        return email
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        if cleaned_data.get('passwordConfirmation') != cleaned_data.get('password'):
+            self.add_error('passwordConfirmation',
+                           'La contraseña no coincide')
