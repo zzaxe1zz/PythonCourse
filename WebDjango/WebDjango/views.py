@@ -61,14 +61,10 @@ def Logout(request):
 def Registration(request):
     form = Registro(request.POST or None)
     if request.method == 'POST' and form.is_valid():
-        username = form.cleaned_data.get('username')
-        email = form.cleaned_data.get('email')
-        password = form.cleaned_data.get('password')
-
-        usuario = User.objects.create_user(username, email, password)
+        usuario = form.save()
         if usuario:
             lg(request, usuario)
-            messages.success(request, f'Bienvenido {username}')
+            messages.success(request, 'Bienvenido')
             return redirect('Index')
 
     return render(request, 'user/registro.html', {

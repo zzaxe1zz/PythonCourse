@@ -25,6 +25,7 @@ class Registro(forms.Form):
         username = self.cleaned_data.get('username')
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError('Este nombre de usuario ya existe')
+        return username
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -39,3 +40,11 @@ class Registro(forms.Form):
         if cleaned_data.get('passwordConfirmation') != cleaned_data.get('password'):
             self.add_error('passwordConfirmation',
                            'La contraseña no coincide')
+        return cleaned_data
+
+    def save(self):
+        return User.objects.create_user(
+            self.cleaned_data.get('username'),
+            self.cleaned_data.get('email'),
+            self.cleaned_data.get('password')
+        )
