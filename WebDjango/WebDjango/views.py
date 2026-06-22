@@ -46,7 +46,7 @@ def Login(request):
             messages.success(request, f'Bienvenido {usuarios.username}')
             return redirect('Index')
         else:
-            messages.error(request, 'Usuario  contraseña incorrectas')
+            messages.error(request, 'Usuario o contraseña incorrectas')
             print()
 
     return render(request, 'user/login.html', {})
@@ -63,8 +63,8 @@ def Registration(request):
     if request.method == 'POST' and form.is_valid():
         usuario = form.save()
         if usuario:
-            lg(request, usuario)
-            messages.success(request, 'Bienvenido')
+            lg(request, usuario, backend='django.contrib.auth.backends.ModelBackend')
+            messages.success(request, f'Bienvenido {usuario.username}')
             return redirect('Index')
 
     return render(request, 'user/registro.html', {
