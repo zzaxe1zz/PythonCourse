@@ -35,6 +35,8 @@ def Index(request):
 
 
 def Login(request):
+    if request.user.is_authenticated:
+        return redirect('Index')
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -59,6 +61,8 @@ def Logout(request):
 
 
 def Registration(request):
+    if request.user.is_authenticated:
+        return redirect('Index')
     form = Registro(request.POST or None)
     if request.method == 'POST' and form.is_valid():
         usuario = form.save()
