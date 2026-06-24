@@ -8,3 +8,8 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.0)
     create_at = models.DateField(auto_now_add=True)
+    slug = models.SlugField(max_length=200, null=False,
+                            blank=False, unique=True)
+
+    def __str__(self):
+        return self.title

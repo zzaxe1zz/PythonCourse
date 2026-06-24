@@ -8,6 +8,8 @@ from django.contrib.auth import logout
 from .forms import Registro
 from django.contrib.auth.models import User
 
+from products.models import Product
+
 
 # python manage.py runserver
 
@@ -22,15 +24,17 @@ from django.contrib.auth.models import User
 #     })
 
 def Index(request):
+    productos = Product.objects.all()
     return render(request, 'index.html', {
         'titulo': 'Inicio',
         'mensaje': 'Tienda',
-        'articulos': [
-            {'titulo': 'Sudadera', 'precio': 15, 'stock': False},
-            {'titulo': 'Pantalon', 'precio': 11, 'stock': True},
-            {'titulo': 'Playera', 'precio': 18, 'stock': False},
-            {'titulo': 'Gorra', 'precio': 10, 'stock': True}
-        ]
+        'articulos': productos,
+        # [
+        #     {'titulo': 'Sudadera', 'precio': 15, 'stock': False},
+        #     {'titulo': 'Pantalon', 'precio': 11, 'stock': True},
+        #     {'titulo': 'Playera', 'precio': 18, 'stock': False},
+        #     {'titulo': 'Gorra', 'precio': 10, 'stock': True}
+        # ]
     })
 
 
