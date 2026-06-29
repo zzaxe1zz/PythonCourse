@@ -4,11 +4,16 @@
 
 {% block content %}
 <div class="col">
+    {% if product.image %}
+    <img src="{{product.image.url}}" alt="Imagen de gorra" width="" height="">
+    {% endif %}
     <div class="h1">{{product.title}}
         <div class="h5 font weight-bold">
             Precio: <span class="text-danger">${{product.price}}</span>
             </span>
         </div>
     </div>
-    <p>{{product.description}}</p>
+    <div>
+        <strong class="alert alert-info d-inline-block">{{product.description}}</strong>
+    </div>
     {% endblock %}

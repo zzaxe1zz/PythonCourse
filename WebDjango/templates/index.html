@@ -3,24 +3,12 @@
 {% load static %}
 
 {% block content %}
-<h1>{{mensaje}}</h1>
-<ul class="list-group">
-    <ul>
-        {%for i in object_list%}
-
-        <li class="list-group-item">
-            {{i}}
-
-            <span>
-                <span class="text-success">{{i.price}}</span>
-
-            </span>
-        </li>
-        {%endfor%}
-
-        <img src="{% static 'Images/gorra.jpg' %}" width="100">
-    </ul>
-
+<div class="col">
+    <h1>{{mensaje}}</h1>
+    {% include 'products/snippets/search.html' %}
+    <div class="row">
+        {% include 'products/snippets/listProducts.html' %}
     </div>
-    </div>
-    {% endblock %}
+
+</div>
+{% endblock %}
