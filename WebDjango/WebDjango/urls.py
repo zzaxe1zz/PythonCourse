@@ -31,7 +31,8 @@ urlpatterns = [
     path('', ProductListView.as_view(), name='Index'),
     path('admin/', admin.site.urls),
     path('social-auth/', include('social_django.urls', namespace="social")),
-    path('productos/', include('products.urls'))
+    path('productos/', include('products.urls')),
+    path('carrito/', include('carts.urls')),
 
 ]
 if settings.DEBUG:
