@@ -1,13 +1,70 @@
 {% extends 'base.html' %}
+{% load funcion_tag %}
 
 {% block content %}
-<h2>Mis compras</h2>
-<ul>
-    <li>
-        PC gamer
-    </li>
+{% if cart.producs.exists %}
+<div class="col-8 mt-4">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Imagen</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in cart.producs.all %}
+            <tr>
+                <th scope="row">
+                    {{ forloop.counter }}
+                </th>
+                <td>
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.title }}" width="70" height="70"
+                        class="img-thumbnail">
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'product' product.slug %}" class="text-decoration-none fw-bold text-dark">
+                        {{ product.title }}
+                    </a>
+                    {% include 'cart/snippets/remove.html' %}
+                </td>
+                <td>
+                    1
+                </td>
+                <td>
+                    <span class="font-weight-bold text-danger">{{ product.price|precio_tag }}</span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
-    <h2>Subtotal</h2>
-    <h2>Total</h2>
-</ul>
+<div class="col">
+    <div class="card">
+        <div class="card-body">
+            <div>
+                Subtotal:({{cart.products.count}}): <span class="text-danger">{{cart.subtotal | precio_tag}}</span>
+            </div>
+            <div class="mt-2">
+                <a href="#" class="btn btn-warning">Pagar</a>
+            </div>
+            <div class="mt-2">
+                <a href="{% url 'Index' %}" class="btn btn-primary">Seguir comprando</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="col text-center p-5">
+    <p class="h3 text-muted">El carrito está vacío</p>
+    <a href="{% url 'Index' %}" class="btn btn-success mt-3">Comprar ahora</a>
+</div>
+{% endif %}
+
 {% endblock %}
