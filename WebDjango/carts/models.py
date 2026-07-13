@@ -13,7 +13,7 @@ class Cart(models.Model):
         max_length=100, null=False, blank=False, unique=True)
     user = models.ForeignKey(
         User, null=True, blank=True, on_delete=models.CASCADE)
-    producs = models.ManyToManyField(Product)
+    producs = models.ManyToManyField(Product, through='CartProduct')
     subtotal = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
     total = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
     create_at = models.DateTimeField(auto_now_add=True)
@@ -28,13 +28,28 @@ class Cart(models.Model):
         self.update_total()
 
     def update_subtotal(self):
-        self.subtotal = sum([product.price for product in self.producs.all()])
+        self.subtotal = sum([
+            item.product.price * item.quantity
+            for item in self.cartproduct_set.all()
+        ])
         self.save()
 
     def update_total(self):
         self.total = self.subtotal + \
             (self.subtotal * decimal.Decimal(Cart.FEE))
         self.save()
+
+
+@property
+def total_items(self):
+    return sum([item.quantity for item in self.cartproduct_set.all()])
+
+
+class CartProduct(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    create_at = models.DateTimeField(auto_now_add=True)
 
 
 def set_cart_id(sender, instance, *args, **kwargs):

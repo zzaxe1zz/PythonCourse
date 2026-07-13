@@ -2,69 +2,81 @@
 {% load funcion_tag %}
 
 {% block content %}
-{% if cart.producs.exists %}
-<div class="col-8 mt-4">
-    <table class="table align-middle">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Imagen</th>
-                <th scope="col">Producto</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col">Precio</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in cart.producs.all %}
-            <tr>
-                <th scope="row">
-                    {{ forloop.counter }}
-                </th>
-                <td>
-                    {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.title }}" width="70" height="70"
-                        class="img-thumbnail">
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="{% url 'product' product.slug %}" class="text-decoration-none fw-bold text-dark">
-                        {{ product.title }}
-                    </a>
-                    {% include 'cart/snippets/remove.html' %}
-                </td>
-                <td>
-                    1
-                </td>
-                <td>
-                    <span class="font-weight-bold text-danger">{{ product.price|precio_tag }}</span>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+<div class="container mt-4">
+    {% if cart.producs.exists %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="table-responsive bg-white p-3 border rounded shadow-sm">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Imagen</th>
+                            <th scope="col">Producto</th>
+                            <th scope="col" class="text-center">Cantidad</th>
+                            <th scope="col" class="text-end">Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cart_product in cart_items %}
+                        <tr>
+                            <th scope="row">
+                                {{ forloop.counter }}
+                            </th>
+                            <td>
+                                {% if cart_product.product.image %}
+                                <img src="{{ cart_product.product.image.url }}" alt="{{ cart_product.product.title }}"
+                                    width="70" height="70" class="img-thumbnail">
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'product' cart_product.product.slug %}"
+                                    class="text-decoration-none fw-bold text-dark d-block">
+                                    {{ cart_product.product.title }}
+                                </a>
+                                <div class="mt-1">
+                                    {% include 'cart/snippets/remove.html' with product=cart_product.product %}
+                                </div>
+                            </td>
+                            <td class="text-center fw-bold">
+                                {{ cart_product.quantity }}
+                            </td>
+                            <td class="text-end">
+                                <span class="font-weight-bold text-danger">${{ cart_product.product.price }}</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-<div class="col">
-    <div class="card">
-        <div class="card-body">
-            <div>
-                Subtotal:({{cart.products.count}}): <span class="text-danger">{{cart.subtotal | precio_tag}}</span>
-            </div>
-            <div class="mt-2">
-                <a href="#" class="btn btn-warning">Pagar</a>
-            </div>
-            <div class="mt-2">
-                <a href="{% url 'Index' %}" class="btn btn-primary">Seguir comprando</a>
+        <div class="col-md-4 mt-4 mt-md-0">
+            <div class="card border-0 shadow-sm p-4 bg-light rounded">
+                <h4 class="fw-bold mb-3">Resumen de compra</h4>
+                <hr>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Subtotal ({{ cart.total_items }} productos)</span>
+                    <strong class="text-danger h5 mb-0">{{ cart.subtotal|precio_tag }}</strong>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <span class="text-muted">Total (con IVA)</span>
+                    <strong class="text-success h4 mb-0">{{ cart.total|precio_tag }}</strong>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <a href="#" class="btn btn-warning fw-bold text-dark py-2">Proceder al Pago</a>
+                    <a href="{% url 'Index' %}" class="btn btn-outline-primary py-2">Seguir comprando</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-{% else %}
-<div class="col text-center p-5">
-    <p class="h3 text-muted">El carrito está vacío</p>
-    <a href="{% url 'Index' %}" class="btn btn-success mt-3">Comprar ahora</a>
+    {% else %}
+    <div class="col text-center p-5 border rounded bg-white shadow-sm mt-4">
+        <p class="h3 text-muted mb-3">El carrito está vacío</p>
+        <a href="{% url 'Index' %}" class="btn btn-success px-4">Comprar ahora</a>
+    </div>
+    {% endif %}
 </div>
-{% endif %}
-
 {% endblock %}

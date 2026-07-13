@@ -1,5 +1,35 @@
 <form action="{% url 'add' %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="product_id" value="{{ product.id }}">
-    <button type="submit" class="btn btn-warning">Agregar al carrito</button>
+
+    <div>
+        <button type="button" class="btn btn-danger d-inline" id="remove">-</button>
+        <input type="number" value="1" class="form-control-1 col-sm-1 d-inline" id="quantity" name="quantity" readonly>
+        <button type="button" class="btn btn-danger d-inline" id="add">+</button>
+    </div>
+    <div class="mt-2">
+        <button type="submit" class="btn btn-warning">Agregar al carrito</button>
+    </div>
 </form>
+
+<script>
+    // Usamos una función anónima autoejecutable para aislar el alcance (scope) 
+    // y evitar cualquier conflicto de nombres con el botón "add"
+    (function () {
+        const btnAdd = document.getElementById("add");
+        const btnRemove = document.getElementById("remove");
+        const inputQuantity = document.getElementById("quantity");
+
+        btnAdd.addEventListener("click", function () {
+            let currentValue = parseInt(inputQuantity.value) || 1;
+            inputQuantity.value = currentValue + 1;
+        });
+
+        btnRemove.addEventListener("click", function () {
+            let currentValue = parseInt(inputQuantity.value) || 1;
+            if (currentValue > 1) {
+                inputQuantity.value = currentValue - 1;
+            }
+        });
+    })();
+</script>
