@@ -13,6 +13,13 @@
     {% include "navbar.html" %}
     <div class="container mt-4">
         {% include "messages.html" %}
+
+        {% block breadcrumb %}
+        {% endblock %}
+
+
+
+
         <div class="row">
             <div class="col-12">
                 {% block content %}

@@ -1,4 +1,5 @@
 from .models import Orden
+from django.urls import reverse
 
 
 def funcionOrden(cart, request):
@@ -10,3 +11,13 @@ def funcionOrden(cart, request):
         request.session['orden_id'] = orden.id
 
     return orden
+
+
+def breadcrumb(products=True, address=False, payment=False, confimation=False):
+    return [
+        {'title': 'Productos', 'active': products, 'url': reverse('orden')},
+        {'title': 'Direccion', 'active': address, 'url': reverse('orden')},
+        {'title': 'Pago', 'active': payment, 'url': reverse('orden')},
+        {'title': 'Confirmacion', 'active': confimation,
+            'url': reverse('orden')},
+    ]

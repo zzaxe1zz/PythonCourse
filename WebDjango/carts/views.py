@@ -45,6 +45,6 @@ def remove(request):
     cart = funcionCarrito(request)
     product = get_object_or_404(Product, pk=request.POST.get('product_id'))
 
-    cart.producs.remove(product)
+    cart.products.remove(product)
 
     return redirect('cart')
