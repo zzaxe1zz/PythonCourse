@@ -6,12 +6,10 @@ from django.contrib.auth.decorators import login_required
 from .utils import breadcrumb
 
 
+# def orden(request):
+#     cart = funcionCarrito(request)
+#     orden = funcionOrden(cart, request)
 @login_required(login_url='login')
-def orden(request):
-    cart = funcionCarrito(request)
-    orden = funcionOrden(cart, request)
-
-
 def orden(request):
     cart = funcionCarrito(request)
     orden = funcionOrden(cart, request)

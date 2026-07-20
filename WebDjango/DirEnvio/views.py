@@ -9,6 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import reverse
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
 
 
 class EnvioDirecciones(LoginRequiredMixin, ListView):
@@ -48,3 +50,18 @@ class UpdateDireccion(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('direccion_envio')
+
+
+class DeleteDireccion(LoginRequiredMixin, DeleteView):
+    login_url = 'login'
+    model = DireccionEnvio
+    template_name = 'direccion_envios/delete.html'
+    success_url = reverse_lazy('direccion_envio')
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.get_object().default:
+            return redirect('direccion_envio')
+
+        if request.user.id != self.get_object().user_id:
+            return redirect('Index')
+        return super(DeleteDireccion, self).dispatch(request, *args, **kwargs)
