@@ -18,3 +18,15 @@ def orden(request):
         'orden': orden,
         'breadcrumb': breadcrumb(),
     })
+
+
+@login_required(login_url='login')
+def direccion(request):
+    cart = funcionCarrito(request)
+    orden = funcionOrden(cart, request)
+
+    return render(request, 'orden/direccion.html', {
+        'cart': cart,
+        'orden': orden,
+        'breadcrumb': breadcrumb(),
+    })
