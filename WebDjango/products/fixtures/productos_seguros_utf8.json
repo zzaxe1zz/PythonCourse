@@ -1,0 +1,50 @@
+﻿[
+{
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+        "title": "Gorra DB",
+        "description": "Exelente",
+        "price": "15.00",
+        "image": "products/gorra.jpg",
+        "create_at": "2026-06-24",
+        "slug": "gorra-db"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "title": "Playera Shell",
+        "description": "algodon",
+        "price": "12.00",
+        "image": "products/playerashell.jpg",
+        "create_at": "2026-06-24",
+        "slug": "playera-shell"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "title": "Pantalon",
+        "description": "Cargo",
+        "price": "25.00",
+        "image": "products/cargo_pants.png",
+        "create_at": "2026-06-25",
+        "slug": "pantalon"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+        "title": "Chamarra",
+        "description": "rompevientos",
+        "price": "30.00",
+        "image": "products/chamarra_zUTm6BG.png",
+        "create_at": "2026-06-25",
+        "slug": "chamarra"
+    }
+}
+]
