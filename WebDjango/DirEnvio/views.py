@@ -29,8 +29,7 @@ def formularioDir(request):
     if request.method == 'POST' and form.is_valid():
         direccion_envio = form.save(commit=False)
         direccion_envio.user = request.user
-        direccion_envio.default = not DireccionEnvio.objects.filter(
-            user=request.user).exists()
+        direccion_envio.default = not request.user.has_direccion_envio()
         direccion_envio.save()
 
         messages.success(request, 'Direccion agregada con exito')

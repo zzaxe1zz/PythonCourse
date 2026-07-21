@@ -25,8 +25,11 @@ def direccion(request):
     cart = funcionCarrito(request)
     orden = funcionOrden(cart, request)
 
+    direccion_envio = orden.get_or_set_direccion_envio
+
     return render(request, 'orden/direccion.html', {
         'cart': cart,
         'orden': orden,
+        'direccion_envio': direccion_envio,
         'breadcrumb': breadcrumb(),
     })

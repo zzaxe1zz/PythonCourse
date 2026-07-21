@@ -16,7 +16,7 @@ def funcionOrden(cart, request):
 def breadcrumb(products=True, address=False, payment=False, confimation=False):
     return [
         {'title': 'Productos', 'active': products, 'url': reverse('orden')},
-        {'title': 'Direccion', 'active': address, 'url': reverse('orden')},
+        {'title': 'Direccion', 'active': address, 'url': reverse('direccion')},
         {'title': 'Pago', 'active': payment, 'url': reverse('orden')},
         {'title': 'Confirmacion', 'active': confimation,
             'url': reverse('orden')},

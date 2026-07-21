@@ -1,4 +1,5 @@
 from django.db import models
+from DirEnvio.models import DireccionEnvio
 from users.models import User
 from carts.models import Cart
 from enum import Enum
@@ -27,6 +28,8 @@ class Orden(models.Model):
         default=10, max_digits=9, decimal_places=2)
     total = models.DecimalField(default=0, max_digits=9, decimal_places=2)
     create_at = models.DateTimeField(auto_now_add=True)
+    direccion_envio = models.ForeignKey(
+        DireccionEnvio, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.ordenID
@@ -37,6 +40,17 @@ class Orden(models.Model):
     def update_total(self):
         self.total = self.get_total()
         self.save()
+
+    def get_or_set_direccion_envio(self):
+        if self.direccion_envio:
+            return self.direccion_envio
+
+        direccion_envio = self.user.direccion_envio
+        if direccion_envio:
+            self.direccion_envio = direccion_envio
+            self.save()
+
+        return direccion_envio
 
 
 def enviarOrden(sender, instance, *args, **kwargs):
