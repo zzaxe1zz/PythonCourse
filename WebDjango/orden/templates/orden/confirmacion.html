@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block breadcrumb %}
+{% include 'orden/snippets/breadcrumb.html' %}
+{% endblock %}
+
+{% block content %}
+<!-- Envoltura principal para colocar las columnas lado a lado -->
+<div class="row">
+
+    <!-- COLUMNA IZQUIERDA (8 de 12) -->
+    <div class="col-8">
+        <div class="h3 mb-3">Confirmacion de pedido</div>
+
+        <!-- Tarjeta con Información -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="badge bg-primary text-wrap mb-2">
+                            Direccion de envio
+                        </div>
+                        <div class="fst-italic">Direccion: {{direccion_envio.direccion}}</div>
+                        <div class="fst-italic">Calle: {{direccion_envio.line1}}</div>
+                        <div class="fst-italic">Codigo postal: {{direccion_envio.postal_code}}</div>
+                        <div class="fst-italic">Referencia: {{direccion_envio.reference}}</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="badge bg-primary text-wrap mb-2">Metodos de pago</div>
+                        <div class="fst-italic">Tarjeta de pago: 2551</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="badge bg-warning text-wrap mb-2">Descuentos</div>
+                        <form>
+                            <input type="text" name="codigo" value="" class="form-control"
+                                placeholder="Codigo Descuento">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerta -->
+        <div class="alert alert-primary mb-3" role="alert">
+            Esta es tu orden al momento <a href="{% url 'orden' %}" class="alert-link">Mi orden</a>. Puedes modificarla
+            si quieres.
+        </div>
+
+        <!-- Productos -->
+        <div class="card mb-3">
+            <div class="card-body">
+                {% for product in cart.products.all %}
+                {% include 'orden/snippets/product.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- COLUMNA DERECHA (4 de 12) -->
+    <div class="col-4">
+        <!-- Detalles de la orden -->
+        <div class="mb-3">
+            {% include 'orden/snippets/detalles.html' %}
+        </div>
+
+        <!-- Botón Eliminar Carrito ajustado al ancho -->
+        <div class="card border-0">
+            <div class="card-body">
+                <a class="btn btn-danger w-100" href="#">Eliminar carrito</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

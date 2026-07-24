@@ -59,3 +59,21 @@ def check_direccion(request, pk):
     orden.update_direccion_envio(direccion_envio)
 
     return redirect('direccion')
+
+
+@login_required(login_url='login')
+def confimacion(request):
+    cart = funcionCarrito(request)
+    orden = funcionOrden(cart, request)
+
+    direccion_envio = orden.direccion_envio
+    if direccion_envio is None:
+        return redirect('direccion')
+
+    return render(request, 'orden/confirmacion.html', {
+        'cart': cart,
+        'orden': orden,
+        'direccion_envio': direccion_envio,
+        'breadcrumb': breadcrumb(address=True, confimation=True),
+
+    })

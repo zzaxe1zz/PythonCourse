@@ -13,6 +13,9 @@
     </div>
     <div>
         {% include "direccion_envios/snippets/cartDirecciones.html" %}
+        <div class="mt-1">
+            <a class="btn btn-success" href="{% url 'confirmacion' %}">Continuar</a>
+        </div>
         {% if countDireccion %}
         <div class="mt-2">
             <a class="btn btn-primary" href="{% url 'select_direccion' %}">Seleccionar direccion</a>
