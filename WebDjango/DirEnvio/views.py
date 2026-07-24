@@ -11,6 +11,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import reverse
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
+from carts.funciones import funcionCarrito
+from orden.utils import funcionOrden
+from django.http.response import HttpResponseRedirect
 
 
 class EnvioDirecciones(LoginRequiredMixin, ListView):
@@ -31,6 +34,18 @@ def formularioDir(request):
         direccion_envio.user = request.user
         direccion_envio.default = not request.user.has_direccion_envio()
         direccion_envio.save()
+
+        next_url = request.GET.get('next') or request.POST.get('next')
+        # 2. Validar si existe y coincide con la ruta 'direccion'
+        if next_url and next_url == reverse('direccion'):
+            # if request.GET.get('next'):
+            #     if request.GET['next'] == reverse('direccion'):
+            cart = funcionCarrito(request)
+            orden = funcionOrden(cart, request)
+
+            orden.update_direccion_envio(direccion_envio)
+
+            return HttpResponseRedirect(request.GET['next'])
 
         messages.success(request, 'Direccion agregada con exito')
         return redirect('direccion_envio')
@@ -59,6 +74,11 @@ class DeleteDireccion(LoginRequiredMixin, DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         if self.get_object().default:
+            return redirect('direccion_envio')
+
+        if self.get_object().has_orden():
+            messages.error(
+                request, 'No puedes eliminar una direccion asociada a una orden')
             return redirect('direccion_envio')
 
         if request.user.id != self.get_object().user_id:

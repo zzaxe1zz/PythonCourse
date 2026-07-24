@@ -5,6 +5,7 @@
         {% csrf_token %}
         <div class="h4">¿Estas seguro de eliminar?</div>
         <input type="submit" class="btn btn-danger" value="Eliminar">
+        <a class="btn btn-primary" href="{% url 'direccion_envio' %}">Cancelar</a>
     </form>
 </div>
 

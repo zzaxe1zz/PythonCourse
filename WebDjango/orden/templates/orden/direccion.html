@@ -13,11 +13,18 @@
     </div>
     <div>
         {% include "direccion_envios/snippets/cartDirecciones.html" %}
+        {% if countDireccion %}
+        <div class="mt-2">
+            <a class="btn btn-primary" href="{% url 'select_direccion' %}">Seleccionar direccion</a>
+        </div>
+        {% endif %}
+
     </div>
     {% else %}
     <div class="h3">Registra tu direccion</div>
     <div class="">
-        <a class="btn btn-primary" href="{% url 'formularioDir' %}">Crear nueva direccion</a>
+        {% url 'direccion' as next_url %}
+        <a class="btn btn-primary" href="{% url 'formularioDir' %}?next={{ next_url }}">Crear nueva direccion</a>
     </div>
     {% endif %}
 </div>

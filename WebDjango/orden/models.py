@@ -47,10 +47,13 @@ class Orden(models.Model):
 
         direccion_envio = self.user.direccion_envio
         if direccion_envio:
-            self.direccion_envio = direccion_envio
-            self.save()
+            self.update_direccion_envio(direccion_envio)
 
         return direccion_envio
+
+    def update_direccion_envio(self, direccion_envio):
+        self.direccion_envio = direccion_envio
+        self.save()
 
 
 def enviarOrden(sender, instance, *args, **kwargs):

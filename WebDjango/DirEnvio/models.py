@@ -22,6 +22,9 @@ class DireccionEnvio(models.Model):
         self.default = default
         self.save()
 
+    def has_orden(self):
+        return self.orden_set.count() >= 1
+
     @property
     def direccion(self):
         return '{}-{}-{}'.format(self.city, self.state, self.country)
