@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import DireccionEnvio
-from carts.funciones import funcionCarrito
+from carts.funciones import funcionCarrito, deleteCart
 from .models import Orden
-from .utils import funcionOrden
+from .utils import funcionOrden, deleteOrden
 from django.contrib.auth.decorators import login_required
 from .utils import breadcrumb
+from django.contrib import messages
 
 
 # def orden(request):
@@ -77,3 +78,19 @@ def confimacion(request):
         'breadcrumb': breadcrumb(address=True, confimation=True),
 
     })
+
+
+@login_required(login_url='login')
+def cancelar_orden(request):
+    cart = funcionCarrito(request)
+    orden = funcionOrden(cart, request)
+
+    if request.user.id != orden.user_id:
+        return redirect('Index')
+
+    orden.cancelar()
+    deleteCart(request)
+    deleteOrden(request)
+
+    messages.error(request, 'Orden eliminada correctamente')
+    return redirect('Index')
