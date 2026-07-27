@@ -22,7 +22,8 @@
         </div>
 
         <div class="col-md-4 mt-4 mt-md-0">
-            {% include 'orden/snippets/detalles.html' %}
+            {% url 'direccion' as next_url %}
+            {% include 'orden/snippets/detalles.html' with next_url=next_url %}
         </div>
     </div>
 </div>

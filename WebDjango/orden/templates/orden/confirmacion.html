@@ -60,7 +60,8 @@
     <div class="col-4">
         <!-- Detalles de la orden -->
         <div class="mb-3">
-            {% include 'orden/snippets/detalles.html' %}
+            {% url 'completado' as next_url %}
+            {% include 'orden/snippets/detalles.html' with next_url=next_url %}
         </div>
 
         <!-- Botón Eliminar Carrito ajustado al ancho -->

@@ -94,3 +94,19 @@ def cancelar_orden(request):
 
     messages.error(request, 'Orden eliminada correctamente')
     return redirect('Index')
+
+
+@login_required(login_url='login')
+def completado(request):
+    cart = funcionCarrito(request)
+    orden = funcionOrden(cart, request)
+
+    if request.user.id != orden.user_id:
+        return redirect('Index')
+
+    orden.completado()
+    deleteCart(request)
+    deleteOrden(request)
+
+    messages.success(request, 'Compra completada')
+    return redirect('Index')
