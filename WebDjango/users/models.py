@@ -2,6 +2,7 @@ from django.db import models
 # from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
 from django.contrib.auth.models import AbstractUser
+from orden.comun import OrdenStatus
 
 
 class User(AbstractUser):
@@ -15,6 +16,9 @@ class User(AbstractUser):
 
     def has_direccion_envio(self):
         return self.direccion_envio is not None
+
+    def ordenes_completadas(self):
+        return self.orden_set.filter(status=OrdenStatus.COMPLETED).order_by('-id')
 
 
 class Cliente(User):

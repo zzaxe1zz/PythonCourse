@@ -6,6 +6,18 @@ from .utils import funcionOrden, deleteOrden
 from django.contrib.auth.decorators import login_required
 from .utils import breadcrumb
 from django.contrib import messages
+from DirEnvio.models import DireccionEnvio
+from django.views.generic.list import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models.query import EmptyQuerySet
+
+
+class OrdenViews(LoginRequiredMixin, ListView):
+    login_url = 'login'
+    template_name = 'orden/ordenes.html'
+
+    def get_queryset(self):
+        return self.request.user.ordenes_completadas()
 
 
 # def orden(request):

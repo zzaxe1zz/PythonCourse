@@ -5,7 +5,7 @@ from django.db.models.signals import pre_save
 from django.db.models.signals import m2m_changed
 import decimal
 import uuid
-# Create your models here.
+from orden.comun import OrdenStatus
 
 
 class Cart(models.Model):
@@ -41,6 +41,11 @@ class Cart(models.Model):
         self.total = self.subtotal + \
             (self.subtotal * decimal.Decimal(Cart.FEE))
         self.save()
+
+
+@property
+def orden(self):
+    return self.orden.set.filter(status=OrdenStatus.CREATED).first()
 
 
 @property

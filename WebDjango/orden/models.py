@@ -5,16 +5,7 @@ from carts.models import Cart
 from enum import Enum
 from django.db.models.signals import pre_save
 import uuid
-
-
-class OrdenStatus(Enum):
-    CREATED = 'CREATED'
-    PAYED = 'PAYED'
-    COMPLETED = 'COMPLETED'
-    CANCELED = 'CANCELED'
-
-
-choices = [(tag, tag.value) for tag in OrdenStatus]
+from .comun import OrdenStatus, choices
 
 
 class Orden(models.Model):

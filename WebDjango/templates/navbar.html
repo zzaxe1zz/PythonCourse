@@ -2,7 +2,7 @@
 {% url 'registration' as registration %}
 {% url 'carts' as cart %}
 {% url 'direccion_envio' as direccion_envio %}
-
+{% url 'completados' as completados %}
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="{% url 'Index' %}">TiendaB</a>
@@ -50,8 +50,15 @@
                     <span class="fa-solid fa-location-arrow"></i>"></span>
                     Mis direcciones</a>
             </li>
-            {% endif %}
-        </ul>
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'completados' %}">
+                        <span class="fa-solid fa-shipping-fast"></i>"></span>
+                        Mis compras</a>
+                </li>
+                {% endif %}
+            </ul>
 
 
 
