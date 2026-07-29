@@ -32,7 +32,7 @@
                     <div class="col-4">
                         <div class="badge bg-warning text-wrap mb-2">Descuentos</div>
                         <form id="formPromo-codigo" action="{% url 'validar' %}">
-                            <input type="text" name="codigo" value="{{orden.promo_codigo}}" class="form-control"
+                            <input type="text" name="codigo" value="{{orden.promo_codigo.codigo}}" class="form-control"
                                 placeholder="Codigo Descuento" {% if orden.promo_codigo %} readonly {% endif %}>
                         </form>
                         <div class="text-success" id="codigo-success" style="font-size: 15px;">
