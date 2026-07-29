@@ -6,6 +6,7 @@ from enum import Enum
 from django.db.models.signals import pre_save
 import uuid
 from .comun import OrdenStatus, choices
+from promo_codigo.models import PromoCodigo
 
 
 class Orden(models.Model):
@@ -21,12 +22,27 @@ class Orden(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     direccion_envio = models.ForeignKey(
         DireccionEnvio, null=True, blank=True, on_delete=models.CASCADE)
+    promo_codigo = models.OneToOneField(
+        PromoCodigo, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.ordenID
 
+    def aplicarCodigo(self, promo_codigo):
+        if self.promo_codigo is None:
+            self.promo_codigo = promo_codigo
+            self.save()
+
+            self.update_total()
+            promo_codigo.used()
+
+    def get_descuento(self):
+        if self.promo_codigo:
+            return self.promo_codigo.descuento
+        return 0
+
     def get_total(self):
-        return self.cart.total + self.envio_total
+        return self.cart.total + self.envio_total - self.get_descuento()
 
     def update_total(self):
         self.total = self.get_total()
