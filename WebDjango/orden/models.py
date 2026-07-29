@@ -7,6 +7,7 @@ from django.db.models.signals import pre_save
 import uuid
 from .comun import OrdenStatus, choices
 from promo_codigo.models import PromoCodigo
+import decimal
 
 
 class Orden(models.Model):
@@ -34,7 +35,7 @@ class Orden(models.Model):
             self.save()
 
             self.update_total()
-            promo_codigo.used()
+            promo_codigo.codigo_usado()
 
     def get_descuento(self):
         if self.promo_codigo:
@@ -42,7 +43,7 @@ class Orden(models.Model):
         return 0
 
     def get_total(self):
-        return self.cart.total + self.envio_total - self.get_descuento()
+        return self.cart.total + self.envio_total - decimal.Decimal(self.get_descuento())
 
     def update_total(self):
         self.total = self.get_total()
